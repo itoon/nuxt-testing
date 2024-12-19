@@ -27,11 +27,14 @@ const isGuessed = ref(false);
 const formattedGuessInput = computed({
   get: () => guess.value,
   set: (rawValue: string) => {
-    guess.value = rawValue.slice(0, WORD_SIZE).toUpperCase();
+    guess.value = rawValue
+      .slice(0, WORD_SIZE)
+      .toUpperCase()
+      .replace(/[^A-Z]/gi, "");
   },
 });
 const handleSubmit = () => {
-  if (!englishWords.includes(guess.value)) {
+  if (!englishWords.includes(formattedGuessInput.value)) {
     return;
   }
   isGuessed.value = true;

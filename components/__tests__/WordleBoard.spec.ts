@@ -84,6 +84,9 @@ describe("WordleBoard", async () => {
       await playerSubmitGuess(wordOfTheDay.toLowerCase());
       expect(wrapper.html()).toContain(VICTORY_MESSAGE);
     });
-    test.todo("player guesses can only contain letters");
+    test("player guesses can only contain letters", async () => {
+      await playerSubmitGuess("WR@!2");
+      expect(wrapper.find("input[type=text]").element.value).toEqual("WR");
+    });
   });
 });
