@@ -31,6 +31,9 @@ const formattedGuessInput = computed({
   },
 });
 const handleSubmit = () => {
+  if (!englishWords.includes(guess.value)) {
+    return;
+  }
   isGuessed.value = true;
 };
 </script>

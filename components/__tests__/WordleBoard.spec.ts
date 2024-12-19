@@ -75,7 +75,11 @@ describe("WordleBoard", async () => {
       await playerSubmitGuess(wordOfTheDay + "EXTRA");
       expect(wrapper.text()).toContain(VICTORY_MESSAGE);
     });
-    test.todo("player guesses can only be submitted if they are real word");
+    test("player guesses can only be submitted if they are real word", async () => {
+      await playerSubmitGuess("QWERT");
+      expect(wrapper.html()).not.toContain(VICTORY_MESSAGE);
+      expect(wrapper.html()).not.toContain(DEFAT_MESSAGE);
+    });
     test.todo("player guesses can are not case-sensitive");
     test.todo("player guesses can only contain letters");
   });
