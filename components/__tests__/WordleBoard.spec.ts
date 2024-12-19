@@ -80,7 +80,10 @@ describe("WordleBoard", async () => {
       expect(wrapper.html()).not.toContain(VICTORY_MESSAGE);
       expect(wrapper.html()).not.toContain(DEFAT_MESSAGE);
     });
-    test.todo("player guesses can are not case-sensitive");
+    test("player guesses can are not case-sensitive", async () => {
+      await playerSubmitGuess(wordOfTheDay.toLowerCase());
+      expect(wrapper.html()).toContain(VICTORY_MESSAGE);
+    });
     test.todo("player guesses can only contain letters");
   });
 });

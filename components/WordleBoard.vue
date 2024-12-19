@@ -27,7 +27,7 @@ const isGuessed = ref(false);
 const formattedGuessInput = computed({
   get: () => guess.value,
   set: (rawValue: string) => {
-    guess.value = rawValue.slice(0, WORD_SIZE);
+    guess.value = rawValue.slice(0, WORD_SIZE).toUpperCase();
   },
 });
 const handleSubmit = () => {
