@@ -1,14 +1,19 @@
-import { describe, expect, test } from "vitest";
+import { beforeEach, describe, expect, test } from "vitest";
 import WordleBoard from "~/components/WordleBoard.vue";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 import { VICTORY_MESSAGE, DEFAT_MESSAGE } from "@/settings";
 
 describe("WordleBoard", async () => {
-  test("a victory message appears when the user makes a guess that matches the word of the day", async () => {
+  const wordOfTheDay = "World";
+  let wrapper: ReturnType<typeof mountSuspended>;
+  beforeEach(async () => {
     // Arrange
-    const wrapper = await mountSuspended(WordleBoard, {
-      props: { wordOfTheDay: "World" },
+    wrapper = await mountSuspended(WordleBoard, {
+      props: { wordOfTheDay },
     });
+  });
+
+  test("a victory message appears when the user makes a guess that matches the word of the day", async () => {
     // Act
     const guessInput = wrapper.find("input[type=text]");
     await guessInput.setValue("World");
