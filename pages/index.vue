@@ -1,3 +1,3 @@
 <template>
-  <WordleBoard wordOfTheDay="World" />
+  <WordleBoard wordOfTheDay="World1" />
 </template>

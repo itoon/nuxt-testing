@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ wordOfTheDay }}</h1>
+  <h1>{{ props.wordOfTheDay }}</h1>
   <form id="submit" @submit.prevent="handleSubmit">
     <input type="text" v-model="guess" />
   </form>
@@ -11,9 +11,13 @@
 <script setup lang="ts">
 import { VICTORY_MESSAGE, DEFAT_MESSAGE } from "@/settings";
 const guess = ref("");
-const props = defineProps<{
-  wordOfTheDay: string;
-}>();
+const props = defineProps({
+  wordOfTheDay: {
+    type: String,
+    request: true,
+    validator: (wordGiven: string) => wordGiven.length === 5,
+  },
+});
 
 const isGuessed = ref(false);
 const message = ref("");
