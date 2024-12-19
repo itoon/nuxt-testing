@@ -36,7 +36,8 @@ describe("WordleBoard", async () => {
 
   // add rule
   test("If a word of the day provide does not have exatly 5 characters, a warning is emiited", async () => {
-    vi.spyOn(console, "warn");
+    // const spy = vi.spyOn(console, "warn");
+    console.warn = vi.fn();
     await mountSuspended(WordleBoard, {
       props: { wordOfTheDay: "FLY" },
     });
