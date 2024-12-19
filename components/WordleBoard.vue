@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { VICTORY_MESSAGE, DEFAT_MESSAGE } from "@/settings";
+import { VICTORY_MESSAGE, DEFAT_MESSAGE, WORD_SIZE } from "@/settings";
 import englishWords from "@/data/englishWordsWith5Letters.json";
 const guess = ref("");
 const props = defineProps({
@@ -17,7 +17,7 @@ const props = defineProps({
     type: String,
     request: true,
     validator: (wordGiven: string) =>
-      wordGiven.length === 5 &&
+      wordGiven.length === WORD_SIZE &&
       wordGiven.toLocaleUpperCase() === wordGiven &&
       englishWords.includes(wordGiven),
   },
@@ -27,7 +27,7 @@ const isGuessed = ref(false);
 const formattedGuessInput = computed({
   get: () => guess.value,
   set: (rawValue: string) => {
-    guess.value = rawValue.slice(0, 5);
+    guess.value = rawValue.slice(0, WORD_SIZE);
   },
 });
 const handleSubmit = () => {

@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import WordleBoard from "~/components/WordleBoard.vue";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
-import { VICTORY_MESSAGE, DEFAT_MESSAGE } from "@/settings";
+import { VICTORY_MESSAGE, DEFAT_MESSAGE, WORD_SIZE } from "@/settings";
 
 describe("WordleBoard", async () => {
   const wordOfTheDay = "WORLD";
@@ -71,7 +71,7 @@ describe("WordleBoard", async () => {
   });
 
   describe("Player input", async () => {
-    test("player guesses are limited to 5 characters", async () => {
+    test(`player guesses are limited to ${WORD_SIZE} characters`, async () => {
       await playerSubmitGuess(wordOfTheDay + "EXTRA");
       expect(wrapper.text()).toContain(VICTORY_MESSAGE);
     });
