@@ -32,7 +32,15 @@ describe("WordleBoard", async () => {
     expect(wrapper.html()).toContain(DEFAT_MESSAGE);
   });
 
-  test.todo(
-    "no end-of-game message appears if the user has not yet made a guess"
-  );
+  test("no end-of-game message appears if the user has not yet made a guess", async () => {
+    // Arrange
+    const wrapper = await mountSuspended(WordleBoard, {
+      props: { wordOfTheDay: "WORLD" },
+    });
+    // Act
+    const guessInput = wrapper.find("input[type=text]");
+    // Assert
+    expect(wrapper.html()).not.toContain(VICTORY_MESSAGE);
+    expect(wrapper.html()).not.toContain(DEFAT_MESSAGE);
+  });
 });

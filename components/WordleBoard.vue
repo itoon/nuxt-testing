@@ -3,8 +3,10 @@
   <form id="submit" @submit.prevent="handleSubmit">
     <input type="text" v-model="guess" />
   </form>
-  <p v-if="isCorrect">{{ VICTORY_MESSAGE }}</p>
-  <p v-else>{{ DEFAT_MESSAGE }}Better luck next time</p>
+  <div v-if="isGuessed">
+    <p v-if="isCorrect">{{ VICTORY_MESSAGE }}</p>
+    <p v-else>{{ DEFAT_MESSAGE }}Better luck next time</p>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -14,8 +16,9 @@ const props = defineProps({
   wordOfTheDay: String,
 });
 const isCorrect = ref(false);
-
+const isGuessed = ref(false);
 const handleSubmit = () => {
+  isGuessed.value = true;
   if (guess.value == props.wordOfTheDay) {
     isCorrect.value = true;
   }
