@@ -59,4 +59,12 @@ describe("WordleBoard", async () => {
     });
     expect(console.warn).toHaveBeenCalled();
   });
+
+  test("no warning is emitted if the word of the day provided is a real uppercase English word with 5 chars", async () => {
+    console.warn = vi.fn();
+    await mountSuspended(WordleBoard, {
+      props: { wordOfTheDay: "WORLD" },
+    });
+    expect(console.warn).not.toHaveBeenCalled();
+  });
 });
