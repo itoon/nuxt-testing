@@ -4,8 +4,7 @@
     <input type="text" v-model="guess" />
   </form>
   <div v-if="isGuessed">
-    <p v-if="isCorrect">{{ VICTORY_MESSAGE }}</p>
-    <p v-else>{{ DEFAT_MESSAGE }}Better luck next time</p>
+    {{ message }}
   </div>
 </template>
 
@@ -16,12 +15,14 @@ const props = defineProps<{
   wordOfTheDay: string;
 }>();
 
-const isCorrect = ref(false);
 const isGuessed = ref(false);
+const message = ref("");
 const handleSubmit = () => {
   isGuessed.value = true;
   if (guess.value == props.wordOfTheDay) {
-    isCorrect.value = true;
+    message.value = VICTORY_MESSAGE;
+  } else {
+    message.value = DEFAT_MESSAGE;
   }
 };
 </script>
