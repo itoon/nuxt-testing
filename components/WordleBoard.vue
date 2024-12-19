@@ -3,10 +3,11 @@
   <form id="submit" @submit.prevent="handleSubmit">
     <input type="text" v-model="guess" />
   </form>
-  <p v-if="isCorrect">You won!</p>
+  <p v-if="isCorrect">{{ VICTORY_MESSAGE }}</p>
 </template>
 
 <script setup lang="ts">
+import { VICTORY_MESSAGE } from "@/settings";
 const guess = ref("");
 const props = defineProps({
   wordOfTheDay: String,
