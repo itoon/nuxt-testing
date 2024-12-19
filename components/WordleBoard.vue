@@ -10,12 +10,16 @@
 
 <script setup lang="ts">
 import { VICTORY_MESSAGE, DEFAT_MESSAGE } from "@/settings";
+import englishWords from "@/data/englishWordsWith5Letters.json";
 const guess = ref("");
 const props = defineProps({
   wordOfTheDay: {
     type: String,
     request: true,
-    validator: (wordGiven: string) => wordGiven.length === 5,
+    validator: (wordGiven: string) =>
+      wordGiven.length === 5 &&
+      wordGiven.toLocaleUpperCase() === wordGiven &&
+      englishWords.includes(wordGiven),
   },
 });
 

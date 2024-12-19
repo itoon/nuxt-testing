@@ -4,7 +4,7 @@ import { mountSuspended } from "@nuxt/test-utils/runtime";
 import { VICTORY_MESSAGE, DEFAT_MESSAGE } from "@/settings";
 
 describe("WordleBoard", async () => {
-  const wordOfTheDay = "World";
+  const wordOfTheDay = "WORLD";
   let wrapper: ReturnType<typeof mountSuspended>;
   beforeEach(async () => {
     wrapper = await mountSuspended(WordleBoard, {
@@ -20,7 +20,7 @@ describe("WordleBoard", async () => {
   };
 
   test("a victory message appears when the user makes a guess that matches the word of the day", async () => {
-    await playerSubmitGuess("World");
+    await playerSubmitGuess("WORLD");
     expect(wrapper.html()).toContain(VICTORY_MESSAGE);
   });
 
@@ -40,6 +40,22 @@ describe("WordleBoard", async () => {
     console.warn = vi.fn();
     await mountSuspended(WordleBoard, {
       props: { wordOfTheDay: "FLY" },
+    });
+    expect(console.warn).toHaveBeenCalled();
+  });
+
+  test("if the word of the day is not all in uppercase, a warning is emitted", async () => {
+    console.warn = vi.fn();
+    await mountSuspended(WordleBoard, {
+      props: { wordOfTheDay: "world" },
+    });
+    expect(console.warn).toHaveBeenCalled();
+  });
+
+  test("if the word of the day is not a reak English, a warning is emitted", async () => {
+    console.warn = vi.fn();
+    await mountSuspended(WordleBoard, {
+      props: { wordOfTheDay: "QWERT" },
     });
     expect(console.warn).toHaveBeenCalled();
   });
