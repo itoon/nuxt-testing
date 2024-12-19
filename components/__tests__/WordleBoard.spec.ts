@@ -67,4 +67,9 @@ describe("WordleBoard", async () => {
     });
     expect(console.warn).not.toHaveBeenCalled();
   });
+
+  test.todo("player guesses are limited to 5 characters");
+  test.todo("player guesses can only be submitted if they are real word");
+  test.todo("player guesses can are not case-sensitive");
+  test.todo("player guesses can only contain letters");
 });
