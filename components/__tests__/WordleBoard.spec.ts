@@ -13,37 +13,25 @@ describe("WordleBoard", async () => {
     });
   });
 
-  test("a victory message appears when the user makes a guess that matches the word of the day", async () => {
+  const playerSubmitGuess = async (guessValue: string) => {
     // Act
     const guessInput = wrapper.find("input[type=text]");
-    await guessInput.setValue("World");
+    await guessInput.setValue(guessValue);
     const form = wrapper.find("form");
     await form.trigger("submit");
-    // Assert
+  };
+
+  test("a victory message appears when the user makes a guess that matches the word of the day", async () => {
+    await playerSubmitGuess("World");
     expect(wrapper.html()).toContain(VICTORY_MESSAGE);
   });
 
   test("a defat message appears if the user makes a guess that is incorrect", async () => {
-    // Arrange
-    const wrapper = await mountSuspended(WordleBoard, {
-      props: { wordOfTheDay: "WORLD" },
-    });
-    // Act
-    const guessInput = wrapper.find("input[type=text]");
-    await guessInput.setValue("WRONG");
-    const form = wrapper.find("form");
-    await form.trigger("submit");
-    // Assert
+    await playerSubmitGuess("WRONG");
     expect(wrapper.html()).toContain(DEFAT_MESSAGE);
   });
 
   test("no end-of-game message appears if the user has not yet made a guess", async () => {
-    // Arrange
-    const wrapper = await mountSuspended(WordleBoard, {
-      props: { wordOfTheDay: "WORLD" },
-    });
-    // Act
-    // Assert
     expect(wrapper.html()).not.toContain(VICTORY_MESSAGE);
     expect(wrapper.html()).not.toContain(DEFAT_MESSAGE);
   });
