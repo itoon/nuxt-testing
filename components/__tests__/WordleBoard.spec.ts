@@ -1,6 +1,6 @@
 // @vitest-environment nuxt
 import { describe, it, expect } from "vitest";
-import HelloWorld from "@/components/HelloWorld.vue";
+import HelloWorld from "~/components/WordleBoard.vue";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 
 describe("HelloWorld", async () => {

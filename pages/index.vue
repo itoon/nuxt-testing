@@ -1,3 +1,3 @@
 <template>
-  <HelloWorld />
+  <WordleBoard msg="You did it!" />
 </template>
