@@ -1,10 +1,9 @@
 <template>
   <h1>{{ wordOfTheDay }}</h1>
-  <form @submit="handleSubmit">
+  <form id="submit" @submit.prevent="handleSubmit">
     <input type="text" v-model="guess" />
   </form>
-  <p v-if="isCorrect">You win</p>
-  <p>You win</p>
+  <p v-if="isCorrect">You won!</p>
 </template>
 
 <script setup lang="ts">
