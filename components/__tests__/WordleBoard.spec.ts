@@ -47,30 +47,6 @@ describe("WordleBoard", async () => {
         expect(console.warn).toHaveBeenCalled();
       }
     );
-    test("If a word of the day provide does not have exatly 5 characters, a warning is emiited", async () => {
-      console.warn = vi.fn();
-      await mountSuspended(WordleBoard, {
-        props: { wordOfTheDay: "FLY" },
-      });
-      expect(console.warn).toHaveBeenCalled();
-    });
-
-    test("if the word of the day is not all in uppercase, a warning is emitted", async () => {
-      console.warn = vi.fn();
-      await mountSuspended(WordleBoard, {
-        props: { wordOfTheDay: "world" },
-      });
-      expect(console.warn).toHaveBeenCalled();
-    });
-
-    test("if the word of the day is not a reak English, a warning is emitted", async () => {
-      console.warn = vi.fn();
-      await mountSuspended(WordleBoard, {
-        props: { wordOfTheDay: "QWERT" },
-      });
-      expect(console.warn).toHaveBeenCalled();
-    });
-
     test("no warning is emitted if the word of the day provided is a real uppercase English word with 5 chars", async () => {
       console.warn = vi.fn();
       await mountSuspended(WordleBoard, {
