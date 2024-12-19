@@ -3,12 +3,6 @@ import WordleBoard from "~/components/WordleBoard.vue";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 
 describe("WordleBoard", async () => {
-  // it("render peoperly", async () => {
-  //   const wrapper = await mountSuspended(WordleBoard, {
-  //     props: { word: "World" },
-  //   });
-  //   expect(wrapper.html()).toContain("Hello, World!");
-  // });
   test("a victory message appears when the user makes a guess that matches the word of the day", async () => {
     // Arrange
     const wrapper = await mountSuspended(WordleBoard, {
