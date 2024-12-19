@@ -1,7 +1,7 @@
 <template>
-  <h1>{{ props.wordOfTheDay }}</h1>
+  <h1>Wordle</h1>
   <form id="submit" @submit.prevent="handleSubmit">
-    <input type="text" v-model="guess" />
+    <input type="text" v-model="formattedGuessInput" maxlength="5" />
   </form>
   <div v-if="isGuessed">
     {{ guess === props.wordOfTheDay ? VICTORY_MESSAGE : DEFAT_MESSAGE }}
@@ -24,13 +24,13 @@ const props = defineProps({
 });
 
 const isGuessed = ref(false);
-const message = ref("");
+const formattedGuessInput = computed({
+  get: () => guess.value,
+  set: (rawValue: string) => {
+    guess.value = rawValue.slice(0, 5);
+  },
+});
 const handleSubmit = () => {
   isGuessed.value = true;
-  // if (guess.value == props.wordOfTheDay) {
-  //   message.value = VICTORY_MESSAGE;
-  // } else {
-  //   message.value = DEFAT_MESSAGE;
-  // }
 };
 </script>
