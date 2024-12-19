@@ -12,9 +12,10 @@
 <script setup lang="ts">
 import { VICTORY_MESSAGE, DEFAT_MESSAGE } from "@/settings";
 const guess = ref("");
-const props = defineProps({
-  wordOfTheDay: String,
-});
+const props = defineProps<{
+  wordOfTheDay: string;
+}>();
+
 const isCorrect = ref(false);
 const isGuessed = ref(false);
 const handleSubmit = () => {

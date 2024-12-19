@@ -38,7 +38,6 @@ describe("WordleBoard", async () => {
       props: { wordOfTheDay: "WORLD" },
     });
     // Act
-    const guessInput = wrapper.find("input[type=text]");
     // Assert
     expect(wrapper.html()).not.toContain(VICTORY_MESSAGE);
     expect(wrapper.html()).not.toContain(DEFAT_MESSAGE);
