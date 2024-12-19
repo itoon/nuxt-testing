@@ -7,14 +7,12 @@ describe("WordleBoard", async () => {
   const wordOfTheDay = "World";
   let wrapper: ReturnType<typeof mountSuspended>;
   beforeEach(async () => {
-    // Arrange
     wrapper = await mountSuspended(WordleBoard, {
       props: { wordOfTheDay },
     });
   });
 
   const playerSubmitGuess = async (guessValue: string) => {
-    // Act
     const guessInput = wrapper.find("input[type=text]");
     await guessInput.setValue(guessValue);
     const form = wrapper.find("form");
