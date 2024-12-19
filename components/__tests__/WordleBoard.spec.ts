@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import WordleBoard from "~/components/WordleBoard.vue";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
-import { VICTORY_MESSAGE, DEFAT_MESSAGE, WORD_SIZE } from "@/settings";
+import { VICTORY_MESSAGE, DEFEAT_MESSAGE, WORD_SIZE } from "@/settings";
 
 describe("WordleBoard", async () => {
   const wordOfTheDay = "WORLD";
@@ -25,14 +25,14 @@ describe("WordleBoard", async () => {
       expect(wrapper.html()).toContain(VICTORY_MESSAGE);
     });
 
-    test("a defat message appears if the user makes a guess that is incorrect", async () => {
+    test("a defeat message appears if the user makes a guess that is incorrect", async () => {
       await playerSubmitGuess("WRONG");
-      expect(wrapper.html()).toContain(DEFAT_MESSAGE);
+      expect(wrapper.html()).toContain(DEFEAT_MESSAGE);
     });
 
     test("no end-of-game message appears if the user has not yet made a guess", async () => {
       expect(wrapper.html()).not.toContain(VICTORY_MESSAGE);
-      expect(wrapper.html()).not.toContain(DEFAT_MESSAGE);
+      expect(wrapper.html()).not.toContain(DEFEAT_MESSAGE);
     });
   });
 
@@ -75,18 +75,26 @@ describe("WordleBoard", async () => {
       await playerSubmitGuess(wordOfTheDay + "EXTRA");
       expect(wrapper.text()).toContain(VICTORY_MESSAGE);
     });
+
     test("player guesses can only be submitted if they are real word", async () => {
       await playerSubmitGuess("QWERT");
       expect(wrapper.html()).not.toContain(VICTORY_MESSAGE);
-      expect(wrapper.html()).not.toContain(DEFAT_MESSAGE);
+      expect(wrapper.html()).not.toContain(DEFEAT_MESSAGE);
     });
+
     test("player guesses can are not case-sensitive", async () => {
       await playerSubmitGuess(wordOfTheDay.toLowerCase());
       expect(wrapper.html()).toContain(VICTORY_MESSAGE);
     });
+
     test("player guesses can only contain letters", async () => {
       await playerSubmitGuess("WR@!2");
       expect(wrapper.find("input[type=text]").element.value).toEqual("WR");
+    });
+
+    test("non-letter characters do not render on the screen while being typed", async () => {
+      await playerSubmitGuess("333");
+      expect(wrapper.find("input[type=text]").element.value).toEqual("");
     });
   });
 });
