@@ -1,4 +1,4 @@
-import { describe, it, expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import WordleBoard from "~/components/WordleBoard.vue";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 import { VICTORY_MESSAGE } from "@/settings";
@@ -17,4 +17,11 @@ describe("WordleBoard", async () => {
     // Assert
     expect(wrapper.html()).toContain(VICTORY_MESSAGE);
   });
+
+  test.todo(
+    "a defat message appears if the user makes a guess that is incorrect"
+  );
+  test.todo(
+    "no end-of-game message appears if the user has not yet made a guess"
+  );
 });
