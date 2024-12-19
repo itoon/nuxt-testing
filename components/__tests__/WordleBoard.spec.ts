@@ -37,9 +37,17 @@ describe("WordleBoard", async () => {
   });
 
   describe("Rule for defining the word of the day", async () => {
-    // add rule
+    test.each(["FLY", "world", "QWERT"])(
+      "If a '%s' of the day provide, a warning is emiited",
+      async (wordOfTheDay) => {
+        console.warn = vi.fn();
+        await mountSuspended(WordleBoard, {
+          props: { wordOfTheDay: wordOfTheDay },
+        });
+        expect(console.warn).toHaveBeenCalled();
+      }
+    );
     test("If a word of the day provide does not have exatly 5 characters, a warning is emiited", async () => {
-      // const spy = vi.spyOn(console, "warn");
       console.warn = vi.fn();
       await mountSuspended(WordleBoard, {
         props: { wordOfTheDay: "FLY" },
