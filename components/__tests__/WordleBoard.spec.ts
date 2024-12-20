@@ -25,10 +25,44 @@ describe("WordleBoard", async () => {
       expect(wrapper.html()).toContain(VICTORY_MESSAGE);
     });
 
-    test("a defeat message appears if the user makes a guess that is incorrect", async () => {
-      await playerSubmitGuess("WRONG");
-      expect(wrapper.html()).toContain(DEFEAT_MESSAGE);
-    });
+    describe.each([
+      {
+        numberOfGuess: 1,
+        isShowDefeatMessage: false,
+      },
+      {
+        numberOfGuess: 2,
+        isShowDefeatMessage: false,
+      },
+      {
+        numberOfGuess: 3,
+        isShowDefeatMessage: false,
+      },
+      {
+        numberOfGuess: 4,
+        isShowDefeatMessage: false,
+      },
+      {
+        numberOfGuess: 5,
+        isShowDefeatMessage: true,
+      },
+    ])(
+      "a defeat message should appear if player incorrect 5 time in a row",
+      async ({ numberOfGuess, isShowDefeatMessage }) => {
+        test(`for ${numberOfGuess} guess(es), a defeat message should ${
+          isShowDefeatMessage ? "" : "not"
+        }`, async () => {
+          for (let i = 0; i < numberOfGuess; i++) {
+            await playerSubmitGuess("WRONG");
+          }
+          if (isShowDefeatMessage) {
+            expect(wrapper.html()).toContain(DEFEAT_MESSAGE);
+          } else {
+            expect(wrapper.html()).not.toContain(DEFEAT_MESSAGE);
+          }
+        });
+      }
+    );
 
     test("no end-of-game message appears if the user has not yet made a guess", async () => {
       expect(wrapper.html()).not.toContain(VICTORY_MESSAGE);
@@ -96,6 +130,24 @@ describe("WordleBoard", async () => {
       await playerSubmitGuess("333");
       await playerSubmitGuess("223");
       expect(wrapper.find("input[type=text]").element.value).toEqual("");
+    });
+
+    test("loaded input forcus", async () => {
+      document.body.innerHTML = "<div id='app'></div>";
+      wrapper = await mountSuspended(WordleBoard, {
+        props: { wordOfTheDay },
+        attachTo: "#app",
+      });
+      const inputEle = wrapper.find("input[type=text]");
+      expect(inputEle.attributes("autofocus")).toBeDefined();
+      await inputEle.trigger("blur");
+      expect(document.activeElement).toBe(inputEle.element);
+    });
+
+    test("clear input when submitted", async () => {
+      await playerSubmitGuess("TESTS");
+      const inputEle = wrapper.find("input[type=text]");
+      expect(inputEle.element.value).toEqual("");
     });
   });
 });

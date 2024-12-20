@@ -1,6 +1,22 @@
 <template>
+  <ul class="word">
+    <li
+      v-for="(letter, index) in formattedGuessInput"
+      :key="index"
+      :data-letter="letter"
+    >
+      {{ letter }}
+    </li>
+  </ul>
   <form id="submit" @submit.prevent="handleSubmit">
-    <input type="text" v-model="formattedGuessInput" :maxlength="WORD_SIZE" />
+    <input
+      type="text"
+      v-model="formattedGuessInput"
+      :maxlength="WORD_SIZE"
+      autofocus
+      @blur="({target}) => (target as HTMLInputElement).focus()"
+      style="opacity: 0; position: absolute"
+    />
   </form>
 </template>
 
@@ -28,5 +44,39 @@ const handleSubmit = () => {
     return;
   }
   emit("submitGuess", formattedGuessInput.value);
+  formattedGuessInput.value = "";
 };
 </script>
+
+<style scoped>
+ul.word {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+ul.word li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  margin: 0 0.5rem;
+  text-align: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid #000;
+  font-weight: bolder;
+}
+li:not([data-letter=""]) {
+  animation: pop 100ms;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+}
+</style>

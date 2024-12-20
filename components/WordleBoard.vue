@@ -2,8 +2,24 @@
   <h1>Wordle</h1>
   <GuessInput @submitGuess="handleSubmit" />
   <div v-if="isGuess">
-    {{ guessSubmit === props.wordOfTheDay ? VICTORY_MESSAGE : DEFEAT_MESSAGE }}
+    <p
+      class="end-of-game-message"
+      v-if="
+        guessSubmit &&
+        guessSubmit[guessSubmit.length - 1] === props.wordOfTheDay
+      "
+    >
+      {{ VICTORY_MESSAGE }}
+    </p>
+    <p class="end-of-game-message" v-else-if="guessSubmit.length == 5">
+      {{ DEFEAT_MESSAGE }}
+    </p>
   </div>
+  <ul>
+    <li v-for="guess in guessSubmit">
+      {{ guess }}
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">
@@ -11,7 +27,7 @@ import GuessInput from "@/components/GuessInput.vue";
 import { VICTORY_MESSAGE, DEFEAT_MESSAGE, WORD_SIZE } from "@/settings";
 import englishWords from "@/data/englishWordsWith5Letters.json";
 
-const guessSubmit = ref<string | null>();
+const guessSubmit = ref<string[]>([]);
 const props = defineProps({
   wordOfTheDay: {
     type: String,
@@ -26,6 +42,25 @@ const props = defineProps({
 const isGuess = ref(false);
 const handleSubmit = (guessInput: string) => {
   isGuess.value = true;
-  guessSubmit.value = guessInput;
+  guessSubmit.value?.push(guessInput);
 };
 </script>
+
+<style lang="css" scoped>
+.end-of-game-message {
+  font-size: 3rem;
+  animation: end-of-game-message-animation 700ms forwards;
+  white-space: nowrap;
+  text-align: center;
+}
+@keyframes end-of-game-message-animation {
+  0% {
+    opacity: 0;
+    transform: rotateZ(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(2rem);
+  }
+}
+</style>
