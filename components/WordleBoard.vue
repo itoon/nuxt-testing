@@ -1,5 +1,6 @@
 <template>
   <h1>Wordle</h1>
+  <GuessView :guesses="guessSubmit" />
   <GuessInput @submitGuess="handleSubmit" />
   <div v-if="isGuess">
     <p
@@ -18,15 +19,11 @@
       {{ DEFEAT_MESSAGE }}
     </p>
   </div>
-  <ul>
-    <li v-for="guess in guessSubmit">
-      {{ guess }}
-    </li>
-  </ul>
 </template>
 
 <script setup lang="ts">
 import GuessInput from "@/components/GuessInput.vue";
+import GuessView from "@/components/GuessView.vue";
 import {
   VICTORY_MESSAGE,
   DEFEAT_MESSAGE,
