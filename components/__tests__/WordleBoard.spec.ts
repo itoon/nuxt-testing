@@ -1,7 +1,12 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import WordleBoard from "~/components/WordleBoard.vue";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
-import { VICTORY_MESSAGE, DEFEAT_MESSAGE, WORD_SIZE } from "@/settings";
+import {
+  VICTORY_MESSAGE,
+  DEFEAT_MESSAGE,
+  WORD_SIZE,
+  MAX_ATTEMPTS,
+} from "@/settings";
 
 describe("WordleBoard", async () => {
   const wordOfTheDay = "WORLD";
@@ -43,11 +48,11 @@ describe("WordleBoard", async () => {
         isShowDefeatMessage: false,
       },
       {
-        numberOfGuess: 5,
+        numberOfGuess: MAX_ATTEMPTS,
         isShowDefeatMessage: true,
       },
     ])(
-      "a defeat message should appear if player incorrect 5 time in a row",
+      `a defeat message should appear if player incorrect ${MAX_ATTEMPTS} time in a row`,
       async ({ numberOfGuess, isShowDefeatMessage }) => {
         test(`for ${numberOfGuess} guess(es), a defeat message should ${
           isShowDefeatMessage ? "" : "not"

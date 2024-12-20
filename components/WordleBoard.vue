@@ -11,7 +11,10 @@
     >
       {{ VICTORY_MESSAGE }}
     </p>
-    <p class="end-of-game-message" v-else-if="guessSubmit.length == 5">
+    <p
+      class="end-of-game-message"
+      v-else-if="guessSubmit.length == MAX_ATTEMPTS"
+    >
       {{ DEFEAT_MESSAGE }}
     </p>
   </div>
@@ -24,7 +27,12 @@
 
 <script setup lang="ts">
 import GuessInput from "@/components/GuessInput.vue";
-import { VICTORY_MESSAGE, DEFEAT_MESSAGE, WORD_SIZE } from "@/settings";
+import {
+  VICTORY_MESSAGE,
+  DEFEAT_MESSAGE,
+  WORD_SIZE,
+  MAX_ATTEMPTS,
+} from "@/settings";
 import englishWords from "@/data/englishWordsWith5Letters.json";
 
 const guessSubmit = ref<string[]>([]);
