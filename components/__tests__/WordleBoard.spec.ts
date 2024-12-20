@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import WordleBoard from "~/components/WordleBoard.vue";
+import GuessView from "~/components/GuessView.vue";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 import {
   VICTORY_MESSAGE,
@@ -52,6 +53,20 @@ describe("WordleBoard", async () => {
         });
       }
     );
+
+    test("disabled input after the game is over", async () => {
+      for (let i = 0; i < MAX_ATTEMPTS; i++) {
+        await playerSubmitGuess("WRONG");
+      }
+      const inputEle = wrapper.find("input[type=text]");
+      expect(inputEle.attributes("disabled")).toBeDefined();
+    });
+
+    test("disabled input after the game is win", async () => {
+      await playerSubmitGuess(wordOfTheDay);
+      const inputEle = wrapper.find("input[type=text]");
+      expect(inputEle.attributes("disabled")).toBeDefined();
+    });
 
     test("no end-of-game message appears if the user has not yet made a guess", async () => {
       expect(wrapper.html()).not.toContain(VICTORY_MESSAGE);
@@ -141,12 +156,31 @@ describe("WordleBoard", async () => {
   });
 
   test("all previous guesses are displayed on the screen", async () => {
-    const guesses = ["WORLD", "WORST", "WORRY"];
+    const guesses = ["WRONG", "WRONG", "WORRY"];
     for (const guess of guesses) {
       await playerSubmitGuess(guess);
     }
     for (const guess of guesses) {
       expect(wrapper.text()).contain(guess);
     }
+  });
+
+  describe(`there should always be exactly ${MAX_ATTEMPTS} guess-views in the board`, async () => {
+    test(`${MAX_ATTEMPTS} guess-views are present at the start of the game`, async () => {
+      expect(wrapper.findAllComponents(GuessView)).toHaveLength(5);
+    });
+
+    test(`${MAX_ATTEMPTS} guess-views are present when the player wins the game`, async () => {
+      await playerSubmitGuess(wordOfTheDay);
+      expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_ATTEMPTS);
+    });
+
+    test(`${MAX_ATTEMPTS} guess-views are present as the player loses the game`, async () => {
+      const guesses = ["WRONG", "GUESS", "HELLO", "WORLD"];
+      for (const guess of guesses) {
+        await playerSubmitGuess(guess);
+        expect(wrapper.findAllComponents(GuessView)).toHaveLength(MAX_ATTEMPTS);
+      }
+    });
   });
 });

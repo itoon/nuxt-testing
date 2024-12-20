@@ -1,13 +1,13 @@
 <template>
-  <ul class="word" v-for="(word, index) in guesses" :key="index">
-    <li v-for="(letter, index) in word" :key="index" :data-letter="letter">
+  <ul class="word">
+    <li v-for="(letter, index) in guesses" :data-letter="letter">
       {{ letter }}
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
-defineProps<{ guesses: string[] }>();
+defineProps<{ guesses: string }>();
 </script>
 
 <style scoped>

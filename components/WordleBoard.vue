@@ -1,8 +1,19 @@
 <template>
   <h1>Wordle</h1>
-  <GuessView :guesses="guessSubmit" />
-  <GuessInput @submitGuess="handleSubmit" />
-  <div v-if="isGuess">
+  <ul>
+    <li
+      v-for="i in MAX_ATTEMPTS - guessSubmit.length"
+      :key="`remaining-guess-${i}`"
+    >
+      <GuessView guesses="" />
+    </li>
+    <li v-for="(word, index) in guessSubmit" :key="`remaining-guess-${index}`">
+      <GuessView :guesses="word" />
+    </li>
+  </ul>
+
+  <GuessInput @submitGuess="handleSubmit" :disabled="isEndGame" />
+  <div>
     <p
       class="end-of-game-message"
       v-if="
@@ -44,11 +55,16 @@ const props = defineProps({
   },
 });
 
-const isGuess = ref(false);
 const handleSubmit = (guessInput: string) => {
-  isGuess.value = true;
   guessSubmit.value?.push(guessInput);
 };
+
+const isEndGame = computed(() => {
+  return (
+    guessSubmit.value.length === MAX_ATTEMPTS ||
+    guessSubmit.value[guessSubmit.value.length - 1] === props.wordOfTheDay
+  );
+});
 </script>
 
 <style lang="css" scoped>

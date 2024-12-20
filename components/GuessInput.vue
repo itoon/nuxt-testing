@@ -14,6 +14,7 @@
       v-model="formattedGuessInput"
       :maxlength="WORD_SIZE"
       autofocus
+      v-bind="$attrs"
       @blur="({target}) => (target as HTMLInputElement).focus()"
       style="opacity: 0; position: absolute"
     />
