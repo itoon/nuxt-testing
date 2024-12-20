@@ -30,28 +30,12 @@ describe("WordleBoard", async () => {
       expect(wrapper.html()).toContain(VICTORY_MESSAGE);
     });
 
-    describe.each([
-      {
-        numberOfGuess: 1,
-        isShowDefeatMessage: false,
-      },
-      {
-        numberOfGuess: 2,
-        isShowDefeatMessage: false,
-      },
-      {
-        numberOfGuess: 3,
-        isShowDefeatMessage: false,
-      },
-      {
-        numberOfGuess: 4,
-        isShowDefeatMessage: false,
-      },
-      {
-        numberOfGuess: MAX_ATTEMPTS,
-        isShowDefeatMessage: true,
-      },
-    ])(
+    describe.each(
+      Array.from({ length: MAX_ATTEMPTS + 1 }, (_, numberOfGuess) => ({
+        numberOfGuess,
+        isShowDefeatMessage: numberOfGuess === MAX_ATTEMPTS,
+      }))
+    )(
       `a defeat message should appear if player incorrect ${MAX_ATTEMPTS} time in a row`,
       async ({ numberOfGuess, isShowDefeatMessage }) => {
         test(`for ${numberOfGuess} guess(es), a defeat message should ${
