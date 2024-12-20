@@ -139,4 +139,14 @@ describe("WordleBoard", async () => {
       expect(inputEle.element.value).toEqual("");
     });
   });
+
+  test("all previous guesses are displayed on the screen", async () => {
+    const guesses = ["WORLD", "WORST", "WORRY"];
+    for (const guess of guesses) {
+      await playerSubmitGuess(guess);
+    }
+    for (const guess of guesses) {
+      expect(wrapper.html()).contain(guess);
+    }
+  });
 });
