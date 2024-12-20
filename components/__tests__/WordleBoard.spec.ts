@@ -146,7 +146,7 @@ describe("WordleBoard", async () => {
       await playerSubmitGuess(guess);
     }
     for (const guess of guesses) {
-      expect(wrapper.html()).contain(guess);
+      expect(wrapper.text()).contain(guess);
     }
   });
 });

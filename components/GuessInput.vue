@@ -60,7 +60,7 @@ ul.word li {
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  margin: 0 0.5rem;
+  margin: 0 2px;
   text-align: center;
   width: 3rem;
   height: 3rem;
