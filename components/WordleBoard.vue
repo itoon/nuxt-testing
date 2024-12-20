@@ -31,7 +31,6 @@ const formattedGuessInput = computed({
       .slice(0, WORD_SIZE)
       .toUpperCase()
       .replace(/[^A-Z]+/gi, "");
-
     triggerRef(formattedGuessInput);
   },
 });
