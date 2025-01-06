@@ -1,6 +1,10 @@
 <template>
   <ul class="word">
-    <li v-for="(letter, index) in guesses" :data-letter="letter">
+    <li
+      v-for="(letter, index) in guesses || Array(5).fill('')"
+      :key="`${letter}-${index}`"
+      :data-letter="letter"
+    >
       {{ letter }}
     </li>
   </ul>

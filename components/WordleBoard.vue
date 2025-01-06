@@ -1,16 +1,15 @@
 <template>
   <h1>Wordle</h1>
-  <ul>
-    <li
-      v-for="i in MAX_ATTEMPTS - guessSubmit.length"
-      :key="`remaining-guess-${i}`"
-    >
-      <GuessView guesses="" />
-    </li>
-    <li v-for="(word, index) in guessSubmit" :key="`remaining-guess-${index}`">
-      <GuessView :guesses="word" />
-    </li>
-  </ul>
+
+  <div v-for="(word, index) in guessSubmit" :key="`remaining-guess-${index}`">
+    <GuessView :guesses="word" />
+  </div>
+  <div
+    v-for="i in MAX_ATTEMPTS - guessSubmit.length"
+    :key="`remaining-guess-${i}`"
+  >
+    <GuessView guesses="" />
+  </div>
 
   <GuessInput @submitGuess="handleSubmit" :disabled="isEndGame" />
   <div>
